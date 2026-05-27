@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hadiah Spesial 💝</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="hearts-bg" id="heartsBg" aria-hidden="true"></div>
+
+    <!-- Layar amplop — ketuk untuk membuka -->
+    <div class="envelope-screen" id="envelopeScreen">
+      <div class="envelope-wrap" id="envelopeWrap">
+        <div class="envelope">
+          <div class="envelope-body"></div>
+          <div class="envelope-flap"></div>
+          <span class="heart-seal">💌</span>
+        </div>
+        <p class="tap-hint">Ketuk amplop untuk membuka hadiah</p>
+      </div>
+    </div>
+
+    <main class="container" id="mainContent" style="opacity: 0">
+      <header>
+        <span class="badge" id="badgeUntuk"></span>
+        <h1 id="judul"></h1>
+      </header>
+
+      <section class="message-card">
+        <div id="ucapanContainer"></div>
+        <div class="signature">
+          <span id="dari"></span>
+          <span class="name" id="namaPengirim"></span>
+        </div>
+      </section>
+
+      <section class="gallery-section" id="gallerySection">
+        <h2>Kenangan Indah 📸</h2>
+        <div class="gallery" id="gallery"></div>
+      </section>
+
+      <section class="qr-section" id="qr">
+        <h2>Bagikan via QR</h2>
+        <p>Scan kode ini agar orang spesial bisa membuka hadiah ini di ponselnya.</p>
+        <div id="qrcode"></div>
+        <p class="url-display" id="urlDisplay"></p>
+        <button type="button" class="btn" id="downloadQr">Unduh QR Code</button>
+        <p style="margin-top:0.75rem;font-size:0.85rem;opacity:0.85">
+          QR tidak muncul? Jalankan <strong>JALANKAN.bat</strong> atau buka
+          <a href="qr.html" style="color:var(--accent);font-weight:700">qr.html</a>
+        </p>
+      </section>
+    </main>
+
+    <a href="qr.html" class="nav-qr" title="QR Code" id="navQr" style="display: none">📱</a>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
