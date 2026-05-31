@@ -7,14 +7,20 @@
     "Untuk: " + (cfg.untuk || "Kamu");
   document.getElementById("judul").textContent =
     cfg.judul || "Hadiah Spesial Untukmu 💝";
-  document.getElementById("dari").textContent = cfg.dari || "Dengan cinta,";
+  document.getElementById("dari").textContent = cfg.dari || "";
   document.getElementById("namaPengirim").textContent =
     cfg.namaPengirim || "";
 
+  const dariEl = document.getElementById("dari");
+  if (!cfg.dari) {
+    dariEl.style.display = "none";
+  }
+
   const ucapanEl = document.getElementById("ucapanContainer");
   const ucapan = cfg.ucapan || ["Selamat! Ini hadiah spesial untukmu."];
-  ucapan.forEach(function (teks) {
+  ucapan.forEach(function (teks, i) {
     const p = document.createElement("p");
+    p.className = i === 0 ? "message-opening" : "message-body";
     p.textContent = teks;
     ucapanEl.appendChild(p);
   });
@@ -44,65 +50,6 @@
     });
   }
 
-  function isScannable(url) {
-    return /^https?:\/\/.+/i.test(url);
-  }
-
-  function getShareUrl() {
-    if (cfg.urlWebsite && cfg.urlWebsite.trim()) {
-      return cfg.urlWebsite.trim();
-    }
-    var href = window.location.href.split("#")[0];
-    if (isScannable(href)) {
-      return href.replace(/qr\.html$/i, "index.html");
-    }
-    return href;
-  }
-
-  function qrImageUrl(target) {
-    return (
-      "https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=10&data=" +
-      encodeURIComponent(target)
-    );
-  }
-
-  function initQr() {
-    const url = getShareUrl();
-    const urlDisplay = document.getElementById("urlDisplay");
-    const qrContainer = document.getElementById("qrcode");
-    const downloadBtn = document.getElementById("downloadQr");
-
-    if (!isScannable(url)) {
-      urlDisplay.innerHTML =
-        '<strong>QR belum bisa discan</strong> — jangan buka lewat double-click file.<br><br>' +
-        '1. Double-click <strong>JALANKAN.bat</strong> di folder ini<br>' +
-        '2. Scan QR di halaman <a href="qr.html" style="color:var(--accent);font-weight:700">qr.html</a><br><br>' +
-        'Atau upload ke <a href="https://app.netlify.com/drop" target="_blank" rel="noopener" style="color:var(--accent)">Netlify Drop</a>, ' +
-        'lalu isi <code>urlWebsite</code> di config.js';
-      downloadBtn.textContent = "Buka Pembuat QR";
-      downloadBtn.onclick = function () {
-        window.location.href = "qr.html";
-      };
-      return;
-    }
-
-    urlDisplay.textContent = url;
-
-    const img = document.createElement("img");
-    img.width = 220;
-    img.height = 220;
-    img.alt = "QR Code";
-    img.src = qrImageUrl(url);
-    qrContainer.appendChild(img);
-
-    downloadBtn.onclick = function () {
-      const link = document.createElement("a");
-      link.download = "qr-hadiah-spesial.png";
-      link.href = qrImageUrl(url);
-      link.click();
-    };
-  }
-
   function createFloatingHearts() {
     const bg = document.getElementById("heartsBg");
     const symbols = ["💕", "💖", "✨", "💗", "🌸"];
@@ -120,20 +67,61 @@
   const envelopeScreen = document.getElementById("envelopeScreen");
   const envelopeWrap = document.getElementById("envelopeWrap");
   const mainContent = document.getElementById("mainContent");
-  const navQr = document.getElementById("navQr");
+  let isOpening = false;
+  const flowerImages = [
+    "spider_flower.webp",
+    "yellow_rose.webp",
+    "guernsey_lily.webp",
+    "pink_lily.webp",
+    "blue_lily.webp",
+    "blue_lily (1).webp",
+    "yellow_lily.webp",
+  ];
+  flowerImages.forEach(function (src) {
+    const preload = new Image();
+    preload.src = src;
+  });
+
+  function createFlowerRain() {
+    const burst = document.createElement("div");
+    burst.className = "flower-burst";
+    burst.setAttribute("aria-hidden", "true");
+    document.body.appendChild(burst);
+
+    for (let i = 0; i < 48; i++) {
+      const petal = document.createElement("img");
+      petal.className = "flower-petal";
+      petal.src = flowerImages[Math.floor(Math.random() * flowerImages.length)];
+      petal.alt = "";
+      petal.style.setProperty("--x-start", Math.random() * 100 + "vw");
+      petal.style.setProperty("--x-shift", Math.random() * 220 - 110 + "px");
+      petal.style.setProperty("--rot-start", Math.random() * 140 - 70 + "deg");
+      petal.style.setProperty("--rot-end", Math.random() * 900 - 450 + "deg");
+      petal.style.setProperty("--scale", (0.95 + Math.random() * 0.9).toFixed(2));
+      petal.style.setProperty("--size", 84 + Math.random() * 78 + "px");
+      petal.style.animationDelay = Math.random() * 1.2 + "s";
+      petal.style.animationDuration = 4.5 + Math.random() * 3.5 + "s";
+      burst.appendChild(petal);
+    }
+
+    setTimeout(function () {
+      burst.remove();
+    }, 9000);
+  }
 
   function openGift() {
+    if (isOpening) return;
+    isOpening = true;
     envelopeWrap.classList.add("opened");
+    createFlowerRain();
     setTimeout(function () {
       envelopeScreen.classList.add("hidden");
       mainContent.style.opacity = "1";
       mainContent.style.transition = "opacity 0.8s ease";
-      navQr.style.display = "flex";
     }, 600);
   }
 
   envelopeWrap.addEventListener("click", openGift);
 
   createFloatingHearts();
-  initQr();
 })();

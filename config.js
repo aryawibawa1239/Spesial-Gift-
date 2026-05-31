@@ -7,18 +7,18 @@ const GIFT_CONFIG = {
   untuk: "Natasya",
 
   // Judul utama
-  judul: "Be Happy My Favorite Person",
+  judul: "My Best Friend",
 
   // Ucapan / pesan (bisa beberapa paragraf)
   ucapan: [
-    "Halo! Ini adalah hadiah kecil dari hatiku untukmu.",
-    "Semoga hari-harimu selalu penuh senyum, tawa, dan kebahagiaan.",
-    "Terima kasih sudah ada di hidupku. Kamu sangat berarti! ✨",
+    "Sorry ngek agak nyebelin kemarin hehe..",
+    "Thank ya udah jadi temen baik saya dari SMP sampe sekarang, walaupun kadang-kadang saya agak nyebelin.",
+    "Makasih juga yaa udah dengerin semua cerita saya sama selalu support saya.",
   ],
 
-  // Penutup / tanda tangan
-  dari: "Dengan cinta,",
-  namaPengirim: "Aryak",
+  // Penutup / tanda tangan (kosongkan dari jika tidak dipakai)
+  dari: "",
+  namaPengirim: "Be Happy My Cess",
 
   // Gambar — letakkan file di folder "images", lalu tulis nama filenya di sini
   // Contoh: "images/foto1.jpg"
